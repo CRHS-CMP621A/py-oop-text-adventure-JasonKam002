@@ -1,5 +1,6 @@
 from room import Room
 from item import Item
+from character import Enemy
 
 player_inv = []
 
@@ -29,17 +30,28 @@ kitchen.add_item(egg, "Egg")
 ball_room.add_item(soccer, "Soccer")
 dining_hall.add_item(sword, "Sword")
 
+dave = Enemy("Dave", "A smelly zombie")
+dave.set_conversation("Grr I want to eat brains...")
+dave.set_weakness("sword")
+dining_hall.addChar(dave)
+
 current_room = kitchen
 
 print('Welcome to the OOP Adventure Game')
+print('Enter a direction: East/South/West/North')
 command = input('> ')
 current_room = current_room.move(command)
 
 while command.lower() != 'exit':
     current_room.get_details()
+    print('Enter a direction/ "E" to pick up item/ "Inv" to check inventory/ "exit" to quit')
     command = input('> ')
-    current_room = current_room.move(command)
     print('')
+    
+    inhabitant = current_room.getChar()
+    if inhabitant is not None:
+        inhabitant.describe()
+        print('')
 
     if command == 'E':
         choice = input('Chose the item you want to pick up > ')

@@ -4,6 +4,7 @@ class Room():
         self.description=None
         self.linked_rooms = {}
         self.all_items = {}
+        self.character=None
 
     def set_description(self, room_description):
         self.description = room_description
@@ -31,7 +32,7 @@ class Room():
             print(f'The {room.get_name()} is {direction} to you')
 
     def move(self, direction):
-        if direction in self.linked_rooms:
+        if direction.lower() in self.linked_rooms:
             return self.linked_rooms[direction]
         elif direction == 'exit':
             return None
@@ -49,5 +50,11 @@ class Room():
 
     def getitem(self, item_name):
         return self.all_items[item_name]
+    
+    def addChar(self, char):
+        self.character=char
+
+    def getChar(self):
+        return self.character
 
     
