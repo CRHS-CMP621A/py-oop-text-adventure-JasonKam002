@@ -11,7 +11,7 @@ class Character():
         self.conversation=conversation
     
     def talk(self):
-        print(f'[{self.name} says]: {self.conversation}')
+        print(f'[{self.name} says]: {self.conversation}\n')
 
     def fight(self):
         print(f'{self.name} does not want to fight with you')

@@ -25,7 +25,7 @@ class Room():
         if self.all_items != False:
             for item_name in self.all_items:
                 item_obj = self.all_items[item_name]
-                print(f'There is a {item_name}: {item_obj.description}')
+                print(f'There is a {item_name}: {item_obj.description}\n')
 
         for direction in self.linked_rooms:
             room = self.linked_rooms[direction]
@@ -34,12 +34,8 @@ class Room():
     def move(self, direction):
         if direction.lower() in self.linked_rooms:
             return self.linked_rooms[direction]
-        elif direction == 'exit':
-            return None
-        elif direction == 'E' or 'Inv':
-            return self
         else:
-            print("You can't go that way")
+            print("You can't go that way\n")
             return self
     
     def add_item(self, item_obj, item_name):

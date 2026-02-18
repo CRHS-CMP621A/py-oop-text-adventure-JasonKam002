@@ -30,28 +30,22 @@ kitchen.add_item(egg, "Egg")
 ball_room.add_item(soccer, "Soccer")
 dining_hall.add_item(sword, "Sword")
 
-dave = Enemy("Dave", "A smelly zombie")
+dave = Enemy("Zombie", "Stinky")
 dave.set_conversation("Grr I want to eat brains...")
-dave.set_weakness("sword")
+dave.set_weakness("Sword")
 dining_hall.addChar(dave)
 
 current_room = kitchen
 
 print('Welcome to the OOP Adventure Game')
-print('Enter a direction: East/South/West/North')
+print('Press Enter to start plaing')
 command = input('> ')
-current_room = current_room.move(command)
 
 while command.lower() != 'exit':
     current_room.get_details()
-    print('Enter a direction/ "E" to pick up item/ "Inv" to check inventory/ "exit" to quit')
+    print('\nEnter a direction/ "E" to pick up item/ "Inv" to check inventory/ "exit" to quit')
     command = input('> ')
     print('')
-    
-    inhabitant = current_room.getChar()
-    if inhabitant is not None:
-        inhabitant.describe()
-        print('')
 
     if command == 'E':
         choice = input('Chose the item you want to pick up > ')
@@ -64,8 +58,40 @@ while command.lower() != 'exit':
         print('Inventory: ')
         for i in player_inv:
             print(i.name)
+        print('')
             
     else:
-        current_room = current_room.move(command)
+        current_room = current_room.move(command.lower())
+
+    inhabitant = current_room.getChar()
+    if inhabitant is not None:
+        print(f'You saw a {inhabitant.name} in the room\n')
+        choice = input("Press 'T' to talk to it, 'F' to fight it, 'Enter' to skip it\n> " )
+        if choice == 'T':
+            inhabitant.talk()
+        elif choice == 'F':
+            weapon = input(f'Pick an item to fight {inhabitant.name}\n> ')
+            status = None
+            
+            for i in player_inv:
+                if weapon == i.name:
+                    status=True
+                    break
+                else:
+                    status=False
+
+            if status==True:
+                survive = inhabitant.fight(weapon)
+                if survive == True:
+                    pass
+                else:
+                    print("You died")
+                    quit()
+
+                
+            else:
+                print("You don't have this item in your inventory\n")
+        else:
+            pass
 
 print('\nThanks for playing')
